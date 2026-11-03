@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head('Low Stock Alerts')}"></head>
+<body>
+
+<div class="app-wrapper">
+    <!-- Sidebar -->
+    <div th:replace="~{layout/base :: sidebar(${activePage})}"></div>
+
+    <div class="app-main">
+        <!-- Header -->
+        <header th:replace="~{layout/base :: header('Low Stock and Depletion Alerts', 'Home / Stock / Low Stock Alerts')}"></header>
+
+        <!-- Content -->
+        <main class="app-content">
+            <!-- Alerts -->
+            <div th:replace="~{layout/base :: alerts}"></div>
+
+            <!-- Out of Stock Section -->
+            <div class="card-enterprise mb-4">
+                <div class="card-header-enterprise bg-light">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-slash-circle text-danger fs-5"></i>
+                        <h2 class="card-title-enterprise text-danger">Out of Stock Products (Critical)</h2>
+                        <span class="badge bg-danger text-white ms-2" th:text="${outOfStockProducts.size()} + ' Critical Items'">0 Items</span>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table-enterprise">
+                        <thead>
+                            <tr>
+                                <th>SKU</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Supplier</th>
+                                <th>Current Stock</th>
+                                <th>Minimum Level</th>
+                                <th>Status</th>
+                                <th class="text-end">Replenish Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="p : ${outOfStockProducts}">
+                                <td class="fw-semibold text-secondary" th:text="${p.sku}">SKU1001</td>
+                                <td class="fw-medium text-dark" th:text="${p.name}">Product Name</td>
+                                <td th:text="${p.category != null ? p.category.name : 'None'}">Category</td>
+                                <td class="text-muted small" th:text="${p.supplier != null ? p.supplier.name : 'None'}">Supplier</td>
+                                <td>
+                                    <span class="fw-bold text-danger fs-6">0</span>
+                                </td>
+                                <td class="text-muted small" th:text="${p.minStockLevel}">10</td>
+                                <td>
+                                    <span class="badge-status badge-out-of-stock">Out of Stock</span>
+                                </td>
+                                <td class="text-end">
+                                    <a th:href="@{/stock/in(productId=${p.id})}" class="btn-primary-enterprise py-1 px-2">
+                                        <i class="bi bi-arrow-down-left-square"></i>
+                                        <span>Restock Now</span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(outOfStockProducts)}">
+                                <td colspan="8" class="text-center py-3 text-muted">
+                                    <div class="text-success fw-medium">All products currently have stock available</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Low Stock Section -->
+            <div class="card-enterprise">
+                <div class="card-header-enterprise bg-light">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-exclamation-triangle text-warning fs-5"></i>
+                        <h2 class="card-title-enterprise text-warning">Low Stock Products (Needs Reorder)</h2>
+                        <span class="badge bg-warning text-dark ms-2" th:text="${lowStockProducts.size()} + ' Low Stock Items'">0 Items</span>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table-enterprise">
+                        <thead>
+                            <tr>
+                                <th>SKU</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Supplier</th>
+                                <th>Current Stock</th>
+                                <th>Minimum Level</th>
+                                <th>Status</th>
+                                <th class="text-end">Replenish Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="p : ${lowStockProducts}">
+                                <td class="fw-semibold text-secondary" th:text="${p.sku}">SKU1001</td>
+                                <td class="fw-medium text-dark" th:text="${p.name}">Product Name</td>
+                                <td th:text="${p.category != null ? p.category.name : 'None'}">Category</td>
+                                <td class="text-muted small" th:text="${p.supplier != null ? p.supplier.name : 'None'}">Supplier</td>
+                                <td>
+                                    <span class="fw-bold text-warning fs-6" th:text="${p.quantity}">5</span>
+                                </td>
+                                <td class="text-muted small" th:text="${p.minStockLevel}">15</td>
+                                <td>
+                                    <span class="badge-status badge-low-stock">Low Stock</span>
+                                </td>
+                                <td class="text-end">
+                                    <a th:href="@{/stock/in(productId=${p.id})}" class="btn-secondary-enterprise py-1 px-2">
+                                        <i class="bi bi-arrow-down-left-square"></i>
+                                        <span>Receive Stock</span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(lowStockProducts)}">
+                                <td colspan="8" class="text-center py-3 text-muted">
+                                    <div class="text-success fw-medium">No products currently below minimum stock threshold</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer th:replace="~{layout/base :: footer}"></footer>
+    </div>
+</div>
+
+<div th:replace="~{layout/base :: scripts}"></div>
+</body>
+</html>

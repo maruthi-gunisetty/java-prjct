@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head(${category.name})}"></head>
+<body>
+
+<div class="app-wrapper">
+    <!-- Sidebar -->
+    <div th:replace="~{layout/base :: sidebar(${activePage})}"></div>
+
+    <div class="app-main">
+        <!-- Header -->
+        <header th:replace="~{layout/base :: header('Category Details', 'Home / Categories / ' + ${category.name})}"></header>
+
+        <!-- Content -->
+        <main class="app-content">
+            <!-- Alerts -->
+            <div th:replace="~{layout/base :: alerts}"></div>
+
+            <!-- Category Info Card -->
+            <div class="card-enterprise mb-4">
+                <div class="card-header-enterprise">
+                    <div>
+                        <h2 class="card-title-enterprise d-inline" th:text="${category.name}">Category Name</h2>
+                        <span class="badge bg-light text-primary border ms-2" th:text="${products.size()} + ' Products'">0 Products</span>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a th:href="@{/categories/edit/{id}(id=${category.id})}" class="btn-secondary-enterprise">
+                            <i class="bi bi-pencil"></i>
+                            <span>Edit Category</span>
+                        </a>
+                        <a th:href="@{/categories}" class="btn-secondary-enterprise">
+                            <i class="bi bi-arrow-left"></i>
+                            <span>All Categories</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body-enterprise">
+                    <p class="text-muted mb-0" th:text="${category.description != null ? category.description : 'No description provided'}">Category Description</p>
+                </div>
+            </div>
+
+            <!-- Products in this category -->
+            <div class="card-enterprise">
+                <div class="card-header-enterprise">
+                    <h3 class="card-title-enterprise">Products in this Category</h3>
+                    <a th:href="@{/products/new}" class="btn-primary-enterprise">
+                        <i class="bi bi-plus-lg"></i>
+                        <span>Add Product to Category</span>
+                    </a>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table-enterprise">
+                        <thead>
+                            <tr>
+                                <th>SKU</th>
+                                <th>Product Name</th>
+                                <th>Supplier</th>
+                                <th>Unit Price</th>
+                                <th>Stock</th>
+                                <th>Status</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="p : ${products}">
+                                <td class="fw-semibold text-secondary" th:text="${p.sku}">SKU1001</td>
+                                <td class="fw-medium text-dark" th:text="${p.name}">Product Name</td>
+                                <td class="text-muted small" th:text="${p.supplier != null ? p.supplier.name : 'None'}">Supplier</td>
+                                <td class="fw-semibold" th:text="'$' + ${#numbers.formatDecimal(p.unitPrice, 1, 'COMMA', 2, 'POINT')}">$0.00</td>
+                                <td class="fw-bold" th:text="${p.quantity}">0</td>
+                                <td>
+                                    <span th:if="${p.outOfStock}" class="badge-status badge-out-of-stock">Out of Stock</span>
+                                    <span th:if="${p.lowStock}" class="badge-status badge-low-stock">Low Stock</span>
+                                    <span th:if="${!p.outOfStock and !p.lowStock}" class="badge-status badge-in-stock">In Stock</span>
+                                </td>
+                                <td class="text-end">
+                                    <div class="d-inline-flex gap-1">
+                                        <a th:href="@{/stock/in(productId=${p.id})}" class="btn-action-icon" title="Receive Stock">
+                                            <i class="bi bi-arrow-down-left"></i>
+                                        </a>
+                                        <a th:href="@{/products/view/{id}(id=${p.id})}" class="btn-action-icon" title="View Product">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a th:href="@{/products/edit/{id}(id=${p.id})}" class="btn-action-icon" title="Edit Product">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(products)}">
+                                <td colspan="7" class="text-center py-4 text-muted">
+                                    <div>No products currently assigned to this category</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer th:replace="~{layout/base :: footer}"></footer>
+    </div>
+</div>
+
+<div th:replace="~{layout/base :: scripts}"></div>
+</body>
+</html>

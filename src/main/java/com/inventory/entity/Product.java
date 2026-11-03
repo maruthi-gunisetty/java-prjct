@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -48,6 +50,9 @@ public class Product {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<StockTransaction> transactions = new ArrayList<>();
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -180,6 +185,14 @@ public class Product {
         this.supplier = supplier;
     }
 
+    public List<StockTransaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<StockTransaction> transactions) {
+        this.transactions = transactions;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -196,4 +209,3 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 }
-

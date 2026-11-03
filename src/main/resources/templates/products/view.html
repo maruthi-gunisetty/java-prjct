@@ -29,6 +29,11 @@
                                     <i class="bi bi-pencil"></i>
                                     <span>Edit</span>
                                 </a>
+                                <a th:href="@{/products/delete/{id}(id=${product.id})}" class="btn-danger-enterprise"
+                                   onclick="return confirmDelete('product')" title="Delete Product">
+                                    <i class="bi bi-trash"></i>
+                                    <span>Delete</span>
+                                </a>
                                 <a th:href="@{/products}" class="btn-secondary-enterprise">
                                     <i class="bi bi-arrow-left"></i>
                                     <span>Back</span>
@@ -117,4 +122,3 @@
 <div th:replace="~{layout/base :: scripts}"></div>
 </body>
 </html>
-

@@ -1,14 +1,17 @@
 package com.inventory.service;
 
 import com.inventory.entity.Product;
+import com.inventory.entity.StockTransaction;
 import com.inventory.exception.DuplicateResourceException;
 import com.inventory.exception.ResourceNotFoundException;
 import com.inventory.repository.ProductRepository;
+import com.inventory.repository.StockTransactionRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -16,9 +19,12 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final StockTransactionRepository transactionRepository;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository,
+                          StockTransactionRepository transactionRepository) {
         this.productRepository = productRepository;
+        this.transactionRepository = transactionRepository;
     }
 
     public List<Product> findAll() {
@@ -82,6 +88,11 @@ public class ProductService {
 
     public void delete(Long id) {
         Product product = findById(id);
+        // Cleanly delete any associated transactions first so foreign key constraints never block removal
+        List<StockTransaction> transactions = transactionRepository.findByProductIdOrderByTransactionDateDesc(id);
+        if (transactions != null && !transactions.isEmpty()) {
+            transactionRepository.deleteAll(transactions);
+        }
         productRepository.delete(product);
     }
 
@@ -132,4 +143,3 @@ public class ProductService {
         productRepository.save(product);
     }
 }
-

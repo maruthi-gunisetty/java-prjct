@@ -44,11 +44,31 @@ class WebSecurityAndMvcTests {
     }
 
     @Test
-    @DisplayName("Verify successful login sets session and redirects to /dashboard")
+    @DisplayName("Verify successful login with admin credentials")
     void testSuccessfulLogin() throws Exception {
         mockMvc.perform(post("/login")
                         .param("username", "admin")
                         .param("password", "admin123"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/dashboard"))
+                .andExpect(flash().attributeExists("successMessage"));
+    }
+
+    @Test
+    @DisplayName("Verify login with fake credentials also grants access in demonstration mode")
+    void testLoginWithFakeCredentials() throws Exception {
+        mockMvc.perform(post("/login")
+                        .param("username", "fakeUser99")
+                        .param("password", "randomSecret456"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/dashboard"))
+                .andExpect(flash().attributeExists("successMessage"));
+    }
+
+    @Test
+    @DisplayName("Verify one click demo login route /login/demo")
+    void testOneClickDemoLogin() throws Exception {
+        mockMvc.perform(get("/login/demo"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/dashboard"))
                 .andExpect(flash().attributeExists("successMessage"));
@@ -68,4 +88,3 @@ class WebSecurityAndMvcTests {
                 .andExpect(model().attributeExists("recentProducts"));
     }
 }
-

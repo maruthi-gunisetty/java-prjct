@@ -63,8 +63,8 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, String sku, String description, BigDecimal unitPrice, 
-                   Integer quantity, Integer minStockLevel, Category category, Supplier supplier) {
+    public Product(String name, String sku, String description, BigDecimal unitPrice,
+            Integer quantity, Integer minStockLevel, Category category, Supplier supplier) {
         this.name = name;
         this.sku = sku;
         this.description = description;

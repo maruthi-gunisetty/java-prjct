@@ -68,3 +68,4 @@ class WebSecurityAndMvcTests {
                 .andExpect(model().attributeExists("recentProducts"));
     }
 }
+

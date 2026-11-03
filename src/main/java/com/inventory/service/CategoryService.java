@@ -60,3 +60,4 @@ public class CategoryService {
         return categoryRepository.count();
     }
 }
+

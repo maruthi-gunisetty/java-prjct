@@ -37,3 +37,4 @@ public interface StockTransactionRepository extends JpaRepository<StockTransacti
                                              @Param("startDate") LocalDateTime startDate,
                                              @Param("endDate") LocalDateTime endDate);
 }
+

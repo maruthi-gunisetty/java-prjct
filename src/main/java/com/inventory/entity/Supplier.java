@@ -126,3 +126,4 @@ public class Supplier {
         return products != null ? products.size() : 0;
     }
 }
+

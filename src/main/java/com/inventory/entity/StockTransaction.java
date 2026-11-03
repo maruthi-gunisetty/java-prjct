@@ -178,3 +178,4 @@ public class StockTransaction {
         this.createdAt = createdAt;
     }
 }
+

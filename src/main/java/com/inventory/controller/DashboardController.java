@@ -24,3 +24,4 @@ public class DashboardController {
         return "dashboard/index";
     }
 }
+

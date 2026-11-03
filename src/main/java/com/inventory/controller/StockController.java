@@ -139,3 +139,4 @@ public class StockController {
         return "stock/low_stock";
     }
 }
+

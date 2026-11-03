@@ -117,3 +117,4 @@ INSERT INTO stock_transactions (product_id, transaction_type, quantity, unit_pri
 (6, 'STOCK_OUT', 5, 79.99, 'SO2004', 'Testing lab equipment allocation', NULL, NOW() - INTERVAL 2 DAY, NOW() - INTERVAL 2 DAY),
 (8, 'STOCK_IN', 70, 45.00, 'PO1005', 'Bulk packaging carton delivery', 4, NOW() - INTERVAL 5 DAY, NOW() - INTERVAL 5 DAY),
 (8, 'STOCK_OUT', 8, 45.00, 'SO2005', 'Outbound shipping pack allocation', NULL, NOW() - INTERVAL 1 DAY, NOW() - INTERVAL 1 DAY);
+

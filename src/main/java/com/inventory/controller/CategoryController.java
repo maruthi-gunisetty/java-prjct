@@ -95,3 +95,4 @@ public class CategoryController {
         return "categories/view";
     }
 }
+

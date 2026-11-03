@@ -117,3 +117,4 @@ public class StockTransactionService {
         return transactionRepository.calculateTotalQuantityByType("STOCK_OUT");
     }
 }
+

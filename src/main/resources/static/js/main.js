@@ -44,3 +44,4 @@ function confirmDelete(resourceName) {
 function triggerPrintReport() {
     window.print();
 }
+

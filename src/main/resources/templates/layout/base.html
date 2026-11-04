@@ -92,17 +92,20 @@
                     <i class="bi bi-person"></i>
                 </div>
                 <div class="user-info">
-                    <div class="user-name" th:text="${session.adminName != null ? session.adminName : 'Administrator'}">Administrator</div>
-                    <div class="user-role" th:text="${session.adminRole != null ? session.adminRole : 'ADMIN'}">ADMIN</div>
+                    <div class="user-name" th:text="${session.adminName != null ? session.adminName : 'Guest Access'}">Guest Access</div>
+                    <div class="user-role" th:text="${session.adminRole != null ? session.adminRole : 'PORTAL'}">PORTAL</div>
                 </div>
             </div>
-            <a th:href="@{/logout}" class="btn-action-icon" title="Logout">
+            <a th:if="${session.currentAdmin != null}" th:href="@{/logout}" class="btn-action-icon" title="Logout">
                 <i class="bi bi-box-arrow-right"></i>
+            </a>
+            <a th:if="${session.currentAdmin == null}" th:href="@{/login}" class="btn-action-icon" title="Login">
+                <i class="bi bi-box-arrow-in-right"></i>
             </a>
         </div>
     </aside>
 
-    <!-- Header Fragment -->
+    <!-- Header Fragment with Login Logo at Top Right Corner -->
     <header th:fragment="header(title, breadcrumb)" class="app-header">
         <div class="header-left">
             <button class="sidebar-toggle-btn" id="sidebarToggle" type="button" aria-label="Toggle navigation">
@@ -122,6 +125,29 @@
                 <i class="bi bi-plus-lg"></i>
                 <span>Add Product</span>
             </a>
+
+            <!-- Top Right Corner: Login Logo / Profile Section -->
+            <div class="header-auth-box ms-2 ps-3 border-start">
+                <!-- If not logged in: Show Login Logo and button -->
+                <a th:if="${session.currentAdmin == null}" th:href="@{/login}" class="btn-header-login" title="Login to Admin Portal">
+                    <i class="bi bi-person-circle fs-5"></i>
+                    <span class="fw-semibold">Login</span>
+                </a>
+
+                <!-- If logged in: Show User Logo / Avatar with Logout link -->
+                <div th:if="${session.currentAdmin != null}" class="d-flex align-items-center gap-2">
+                    <div class="header-user-badge" title="Administrator Account">
+                        <i class="bi bi-person-check-fill"></i>
+                    </div>
+                    <div class="d-none d-md-block text-start lh-1">
+                        <div class="fw-semibold small text-dark" th:text="${session.adminName != null ? session.adminName : 'Administrator'}">Admin</div>
+                        <div class="text-muted" style="font-size: 0.7rem;" th:text="${session.adminRole != null ? session.adminRole : 'ADMIN'}">ADMIN</div>
+                    </div>
+                    <a th:href="@{/logout}" class="btn-action-icon ms-1" title="Sign Out">
+                        <i class="bi bi-box-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -166,4 +192,3 @@
 
 </body>
 </html>
-

@@ -20,19 +20,32 @@ class WebSecurityAndMvcTests {
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("Verify unauthorized request to /dashboard redirects to /login")
-    void testUnauthorizedRedirect() throws Exception {
-        mockMvc.perform(get("/dashboard"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/login"));
+    @DisplayName("Verify root / directly loads the dashboard without forced login")
+    void testRootLoadsDashboardDirectly() throws Exception {
+        mockMvc.perform(get("/"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("dashboard/index"))
+                .andExpect(model().attributeExists("totalProducts"));
     }
 
     @Test
-    @DisplayName("Verify unauthorized request to /products redirects to /login")
-    void testUnauthorizedProductsRedirect() throws Exception {
+    @DisplayName("Verify /dashboard directly accessible without forced login")
+    void testDashboardDirectAccess() throws Exception {
+        mockMvc.perform(get("/dashboard"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("dashboard/index"))
+                .andExpect(model().attributeExists("totalProducts"))
+                .andExpect(model().attributeExists("totalStockQuantity"))
+                .andExpect(model().attributeExists("recentProducts"));
+    }
+
+    @Test
+    @DisplayName("Verify /products directly accessible without forced login")
+    void testProductsDirectAccess() throws Exception {
         mockMvc.perform(get("/products"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/login"));
+                .andExpect(status().isOk())
+                .andExpect(view().name("products/list"))
+                .andExpect(model().attributeExists("products"));
     }
 
     @Test
@@ -72,19 +85,5 @@ class WebSecurityAndMvcTests {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/dashboard"))
                 .andExpect(flash().attributeExists("successMessage"));
-    }
-
-    @Test
-    @DisplayName("Verify authorized user with active session can access /dashboard")
-    void testAuthorizedDashboardAccess() throws Exception {
-        MockHttpSession session = new MockHttpSession();
-        session.setAttribute("currentAdmin", "admin");
-
-        mockMvc.perform(get("/dashboard").session(session))
-                .andExpect(status().isOk())
-                .andExpect(view().name("dashboard/index"))
-                .andExpect(model().attributeExists("totalProducts"))
-                .andExpect(model().attributeExists("totalStockQuantity"))
-                .andExpect(model().attributeExists("recentProducts"));
     }
 }

@@ -517,6 +517,40 @@ body {
     border-color: #fecaca;
 }
 
+/* Header Top Right Login Button and User Badge */
+.btn-header-login {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.95rem;
+    background-color: #eff6ff;
+    color: var(--blue-accent);
+    border: 1px solid var(--blue-border);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.15s ease;
+}
+
+.btn-header-login:hover {
+    background-color: var(--blue-accent);
+    color: #ffffff;
+}
+
+.header-user-badge {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: #eff6ff;
+    color: var(--blue-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    border: 1px solid var(--blue-border);
+}
+
 /* Forms */
 .form-label-enterprise {
     font-size: 0.825rem;

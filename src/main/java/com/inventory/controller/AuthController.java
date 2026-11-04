@@ -5,7 +5,6 @@ import com.inventory.service.AdminService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -76,6 +75,6 @@ public class AuthController {
             session.invalidate();
         }
         redirectAttributes.addFlashAttribute("infoMessage", "You have been logged out successfully");
-        return "redirect:/login";
+        return "redirect:/dashboard";
     }
 }

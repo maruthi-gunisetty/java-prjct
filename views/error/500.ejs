@@ -1,0 +1,14 @@
+<%- include('../partials/header', { pageHeading: 'Internal Application Exception' }) %>
+
+<div class="row justify-content-center py-5">
+    <div class="col-md-6 text-center">
+        <div class="display-1 fw-bold text-danger mb-3">500</div>
+        <h4 class="fw-bold text-dark mb-2">Internal Processing Notice</h4>
+        <p class="text-secondary mb-4"><%= typeof error !== 'undefined' ? error : 'An unexpected exception occurred during processing. Please verify parameters and retry.' %></p>
+        <a href="/dashboard" class="btn btn-primary px-4">
+            <i class="bi bi-house-door me-1"></i> Return to Executive Dashboard
+        </a>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

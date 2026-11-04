@@ -1,6 +1,6 @@
 # Digital Book
 
-A full stack enterprise inventory and logistics management web application developed using Java, Spring Boot, Spring MVC, Spring Data JPA, Hibernate, MySQL, Thymeleaf, and Bootstrap 5.
+A full stack enterprise inventory and logistics management web application developed using JavaScript, Node.js, Express, EJS, SQLite / MySQL, and Bootstrap 5.
 
 Suitable for academic evaluations and real world business inventory tracking.
 
@@ -8,39 +8,34 @@ Suitable for academic evaluations and real world business inventory tracking.
 
 ## Key Highlights
 
-- **Enterprise Architecture**: Complete separation of Controller, Service, Repository, Entity, Exception, and Configuration layers.
-- **Role Authentication**: Secure administrator authentication with BCrypt password hashing and session management.
-- **Dashboard Analytics**: Real time stock valuation, category distribution charts, stock overview graphs, and recent transaction feeds.
+- **Full Stack JavaScript Architecture**: Built on Node.js and Express with modular MVC structure (Controllers, Models, Routes, Views, Configuration).
+- **Direct Executive Access**: Landing page routes directly to the executive dashboard without requiring mandatory prior authentication.
+- **Top Right Authentication Portal**: Accessible login logo in the header with support for both official administrator credentials and guest/fake credentials for frictionless demonstration.
+- **Cascading Product Deletion**: Safe deletion of products that automatically cleans up child transaction records, completely eliminating foreign key lock errors.
+- **Dashboard Analytics**: Real time stock valuation, category distribution charts, stock overview graphs, and recent transaction feeds via Chart.js.
 - **Complete Product Catalog**: Full CRUD operations, unique SKU enforcement, multi parameter search, category filtering, and sorting.
-- **Category and Supplier Management**: Full lifecycle management with relationship safety guards.
+- **Category and Supplier Management**: Complete lifecycle management with relationship safety guards.
 - **Stock Movement Operations**: Stock In (automatic receipt and increment) and Stock Out (validation against current stock and automatic decrement).
 - **Automated Alerts**: Low stock and depletion alerts with immediate one click restock shortcuts.
-- **Reporting and Exports**: Inventory valuation summaries, date range filtering, printable executive view, and CSV data export.
-- **Zero Config Fallback**: Connects directly to MySQL when available on port 3306, with seamless embedded database capability for demonstration portability.
+- **Reporting and Exports**: Inventory valuation summaries, status filtering, printable executive view, and direct CSV file download.
+- **Typography and Design**: Roboto Google Font, clean navy blue palette, zero emojis, and zero hyphens in all user facing text.
 
 ---
 
 ## Technology Stack
 
 ### Backend
-- **Language**: Java (JDK 21 / 27 compatible)
-- **Framework**: Spring Boot 3.3.5
-- **Web MVC**: Spring MVC, Spring Validation
-- **Persistence**: Spring Data JPA, Hibernate 6
-- **Security**: Spring Security Crypto (BCrypt)
-- **Build Tool**: Apache Maven 3.9.9
+- **Runtime**: Node.js (v18+)
+- **Framework**: Express.js 4
+- **Persistence Engine**: SQLite (`better-sqlite3`) with optional MySQL support (`mysql2`)
+- **Security**: BCryptJS password hashing and session management
 
 ### Frontend
-- **Template Engine**: Thymeleaf 3
+- **Template Engine**: EJS (Embedded JavaScript)
 - **CSS Framework**: Bootstrap 5.3.3
 - **Typography**: Roboto (Google Fonts)
 - **Iconography**: Bootstrap Icons (clean vector line icons)
 - **Data Visualization**: Chart.js 4.4.2
-
-### Database
-- **Primary Database**: MySQL (Database name: `inventory_management`)
-- **Dialect**: MySQLDialect
-- **Script**: `database.sql` included in root folder
 
 ---
 
@@ -48,234 +43,104 @@ Suitable for academic evaluations and real world business inventory tracking.
 
 ```
 c:\Users\marut\java prjct\
-├── pom.xml                                   # Maven project object model
-├── mvnw / mvnw.cmd                           # Maven wrapper scripts
-├── database.sql                              # Complete MySQL database creation script
-├── README.md                                 # Documentation and run instructions
-└── src
-    ├── main
-    │   ├── java
-    │   │   └── com
-    │   │       └── inventory
-    │   │           ├── InventoryApplication.java
-    │   │           ├── config
-    │   │           │   ├── AppConfig.java
-    │   │           │   ├── AuthInterceptor.java
-    │   │           │   ├── DataSourceConfig.java
-    │   │           │   ├── DatabaseInitializer.java
-    │   │           │   └── WebMvcConfig.java
-    │   │           ├── controller
-    │   │           │   ├── AuthController.java
-    │   │           │   ├── CategoryController.java
-    │   │           │   ├── CustomErrorController.java
-    │   │           │   ├── DashboardController.java
-    │   │           │   ├── ProductController.java
-    │   │           │   ├── ReportController.java
-    │   │           │   ├── StockController.java
-    │   │           │   └── SupplierController.java
-    │   │           ├── entity
-    │   │           │   ├── Admin.java
-    │   │           │   ├── Category.java
-    │   │           │   ├── Product.java
-    │   │           │   ├── StockTransaction.java
-    │   │           │   └── Supplier.java
-    │   │           ├── exception
-    │   │           │   ├── DuplicateResourceException.java
-    │   │           │   ├── GlobalExceptionHandler.java
-    │   │           │   ├── InsufficientStockException.java
-    │   │           │   └── ResourceNotFoundException.java
-    │   │           ├── repository
-    │   │           │   ├── AdminRepository.java
-    │   │           │   ├── CategoryRepository.java
-    │   │           │   ├── ProductRepository.java
-    │   │           │   ├── StockTransactionRepository.java
-    │   │           │   └── SupplierRepository.java
-    │   │           └── service
-    │   │               ├── AdminService.java
-    │   │               ├── CategoryService.java
-    │   │               ├── DashboardService.java
-    │   │               ├── ProductService.java
-    │   │               ├── ReportService.java
-    │   │               ├── StockTransactionService.java
-    │   │               └── SupplierService.java
-    │   └── resources
-    │       ├── application.properties        # Application configuration
-    │       ├── static
-    │       │   ├── css
-    │       │   │   └── style.css             # Enterprise navy and blue theme
-    │       │   └── js
-    │       │       └── main.js               # Client interactions and prints
-    │       └── templates
-    │           ├── auth
-    │           │   └── login.html            # Admin login view
-    │           ├── categories
-    │           │   ├── form.html             # Add and edit category
-    │           │   ├── list.html             # List all categories
-    │           │   └── view.html             # Category product inventory
-    │           ├── dashboard
-    │           │   └── index.html            # Analytics dashboard
-    │           ├── error
-    │           │   ├── 404.html              # Resource not found view
-    │           │   └── 500.html              # Error view
-    │           ├── layout
-    │           │   └── base.html             # Common master layout fragments
-    │           ├── products
-    │           │   ├── form.html             # Add and edit product
-    │           │   ├── list.html             # Filterable product catalog
-    │           │   └── view.html             # Product specification
-    │           ├── reports
-    │           │   └── index.html            # Reports and valuation
-    │           ├── stock
-    │           │   ├── history.html          # Transaction movement history
-    │           │   ├── low_stock.html        # Depletion alert view
-    │           │   ├── stock_in.html         # Receive inventory form
-    │           │   └── stock_out.html        # Dispatch inventory form
-    │           └── suppliers
-    │               ├── form.html             # Add and edit supplier
-    │               └── list.html             # Supplier directory
-    └── test
-        └── java
-            └── com
-                └── inventory
-                    ├── InventorySystemTests.java       # Service and transaction tests
-                    └── WebSecurityAndMvcTests.java     # Security and controller tests
+├── config/
+│   └── db.js                 # Database configuration, schema migration, and initial seeding
+├── models/
+│   ├── adminModel.js         # Administrator lookup, authentication, and demo access
+│   ├── categoryModel.js      # Category CRUD and product count tracking
+│   ├── supplierModel.js      # Supplier CRUD and product unlinking
+│   ├── productModel.js       # Product CRUD, search, filter, sort, cascade delete, stats
+│   └── transactionModel.js   # Stock In, Stock Out with balance checks, audit history
+├── controllers/
+│   ├── authController.js     # Login with credentials/fake mode, demo login, logout
+│   ├── dashboardController.js# Dashboard KPI metrics, recent feeds, and analytics
+│   ├── productController.js  # Product management actions
+│   ├── categoryController.js # Category operations
+│   ├── supplierController.js # Supplier operations
+│   ├── stockController.js    # Stock In, Stock Out, history log, low stock monitor
+│   └── reportController.js   # Valuation reports and CSV file download
+├── routes/
+│   ├── authRoutes.js         # Authentication routes
+│   ├── dashboardRoutes.js    # Dashboard routes
+│   ├── productRoutes.js      # Product routes
+│   ├── categoryRoutes.js     # Category routes
+│   ├── supplierRoutes.js     # Supplier routes
+│   ├── stockRoutes.js        # Stock routes
+│   ├── reportRoutes.js       # Report and export routes
+│   └── apiRoutes.js          # REST JSON endpoints for dashboard charts
+├── views/
+│   ├── partials/
+│   │   ├── header.ejs        # Header with Digital Book brand, Roboto font, top right login
+│   │   ├── sidebar.ejs       # Clean navigation sidebar without emojis or hyphens
+│   │   ├── alerts.ejs        # Alert flash notifications
+│   │   └── footer.ejs        # Footer and script bundles
+│   ├── auth/                 # Admin login view with fake credentials support
+│   ├── dashboard/            # Executive KPI cards and Chart.js visualizations
+│   ├── products/             # Product list, form, and view templates
+│   ├── categories/           # Category list and form templates
+│   ├── suppliers/            # Supplier list and form templates
+│   ├── stock/                # Stock In, Stock Out, history, low stock templates
+│   ├── reports/              # Valuation reports and CSV export template
+│   └── error/                # 404 and 500 enterprise error templates
+├── public/
+│   ├── css/style.css         # Enterprise navy stylesheet with Roboto typography
+│   └── js/main.js            # Sidebar toggle, modal confirmations, and print trigger
+├── test/
+│   └── app.test.js           # Automated integration verification suite
+├── database.sql              # MySQL schema and reference seed dataset
+├── package.json              # Project dependencies and run scripts
+├── server.js                 # Express server entry point (Port 8080)
+└── README.md                 # System documentation
 ```
 
 ---
 
-## Database Configuration
+## Local Setup and Running
 
-### Step 1: Create Database in MySQL
+### Prerequisites
+- Node.js (version 18 or newer)
+- npm (comes with Node.js)
 
-Open MySQL Command Line Client, MySQL Workbench, or phpMyAdmin and execute:
+### Installation
 
-```sql
-CREATE DATABASE IF NOT EXISTS inventory_management;
-```
+1. Navigate to the project root directory:
+   ```bash
+   cd "c:\Users\marut\java prjct"
+   ```
 
-You can optionally import the complete schema and seed data using the included `database.sql` script:
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Launch the application:
+   ```bash
+   npm start
+   ```
+
+4. Open the application in your browser:
+   ```
+   http://localhost:8080
+   ```
+
+The application automatically seeds an administrator, product categories, suppliers, catalog products, and initial transaction logs on first run.
+
+---
+
+## Access Credentials
+
+| Role | Username | Password | Notes |
+|---|---|---|---|
+| System Administrator | `admin` | `admin123` | Default administrator account |
+| Guest / Demo User | *Any username* | *Any password* | Allows immediate exploration via fake credentials mode |
+| Instant Access | Click "Demo Access" | No typing needed | Top right header shortcut |
+
+---
+
+## Automated Verification Suite
+
+Run the included verification suite to test database models, calculations, stock constraints, and cascading deletion:
 
 ```bash
-mysql -u root -p inventory_management < database.sql
+node test/app.test.js
 ```
-
-### Step 2: Configure Credentials
-
-Review or edit `src/main/resources/application.properties` to match your local MySQL settings:
-
-```properties
-spring.datasource.mysql.host=127.0.0.1
-spring.datasource.mysql.port=3306
-spring.datasource.mysql.database=inventory_management
-spring.datasource.mysql.username=root
-spring.datasource.mysql.password=your_mysql_password
-```
-
-Note: If MySQL is not running on your computer, the application automatically detects it and uses an in memory database instance with pre loaded demonstration data so that you can test every page immediately without any setup errors.
-
----
-
-## How to Run the Application
-
-### Option A: Using Maven Wrapper (Recommended)
-
-Open terminal in the project root directory and execute:
-
-```powershell
-.\mvnw.cmd spring-boot:run
-```
-
-Or on Linux / macOS:
-
-```bash
-./mvnw spring-boot:run
-```
-
-### Option B: Using Installed Maven
-
-```powershell
-mvn spring-boot:run
-```
-
-### Option C: Package and Run JAR
-
-```powershell
-.\mvnw.cmd clean package -DskipTests
-java -jar target\inventory-management-system-1.0.0.jar
-```
-
----
-
-## Application Access
-
-Once the application starts, open your browser and navigate to:
-
-```
-http://localhost:8080
-```
-
-### Default Administrator Credentials
-
-| Field | Value |
-|---|---|
-| Username | `admin` |
-| Password | `admin123` |
-| Access Role | `System Administrator` |
-
----
-
-## Features and Module Walkthrough
-
-### 1. Admin Authentication
-- Secure login view with validation and credential checking.
-- Session interceptor protects all internal routes (`/dashboard`, `/products`, `/categories`, `/suppliers`, `/stock`, `/reports`).
-- Unauthorized requests are automatically redirected to `/login`.
-- Single click logout invalidates session cleanly.
-
-### 2. Executive Dashboard
-- Dynamic database driven cards: Total Products, Total Stock Units, Low Stock Products, Out of Stock Products, Total Inventory Valuation.
-- Interactive Chart.js graphs:
-  - Stock Distribution by Category (Doughnut chart)
-  - Product Stock Overview: Available Stock vs Minimum Stock Threshold (Bar chart)
-- Recent 5 Products table with direct link to details.
-- Recent 5 Stock Transactions table with real time status indicators.
-
-### 3. Product Management (CRUD)
-- View complete product inventory with SKU, category, supplier, unit price, stock count, and status badges.
-- Filter products dynamically by Category.
-- Search products by Name or SKU code.
-- Sort records by Name, SKU, Price, Quantity, or Date Added.
-- Create new products with duplicate SKU prevention.
-- Edit existing product specifications.
-- Safe delete operation with modal confirmation.
-
-### 4. Category and Supplier Management
-- Categorize catalog items into modular groups.
-- View all products belonging to any specific category.
-- Safety protection prevents deleting categories or suppliers that currently have active products associated with them.
-- Supplier directory with contact person, phone, email, and supplied product counts.
-
-### 5. Stock Management
-- **Stock In**: Select product, specify incoming quantity, optional supplier, reference order number, and notes. Automatically increments available product stock and records a transaction history log.
-- **Stock Out**: Select product, specify outgoing quantity, order reference, and destination notes. Validates that requested units do not exceed available stock. Automatically decrements inventory.
-- **Low Stock Alerts**: Identifies products at or below their minimum reorder point. Provides instant one click restock shortcuts directly into the Stock In form.
-- **Transaction History**: Comprehensive historical audit log with filter by product, transaction type (Stock In / Stock Out), and date ranges.
-
-### 6. Inventory Reports and Data Export
-- Comprehensive status report showing product counts, units, and cumulative valuation.
-- Filter by report type (Complete Catalog, In Stock Healthy, Low Stock, Out of Stock) and Category.
-- Export to CSV format for Excel or external processing.
-- Clean printable layout with dedicated print styles for PDF generation via browser print (`Ctrl + P`).
-
----
-
-## Test Verification
-
-Run all unit, integration, and security tests with:
-
-```powershell
-.\mvnw.cmd test
-```
-
-All 12 automated test cases pass with zero failures and zero errors.
-

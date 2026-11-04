@@ -1,0 +1,86 @@
+<%- include('../partials/header', { pageHeading: 'Dispatch Outgoing Stock' }) %>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+                <h4 class="fw-bold mb-1 text-dark">Stock Out Dispatch</h4>
+                <p class="text-secondary small mb-0">Record outgoing shipments, sales fulfillment, or internal requisitions</p>
+            </div>
+            <a href="/stock/history" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-clock-history me-1"></i> View History
+            </a>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <form action="/stock/out" method="POST" id="stockOutForm">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="product_id" class="form-label fw-medium text-dark">Select Target Product <span class="text-danger">*</span></label>
+                            <select class="form-select" id="product_id" name="product_id" required>
+                                <option value="" disabled <%= !preselectedProductId ? 'selected' : '' %>>Choose a Product from Catalog</option>
+                                <% products.forEach(function(p) { %>
+                                    <option value="<%= p.id %>" <%= preselectedProductId == p.id ? 'selected' : '' %> data-qty="<%= p.quantity %>">
+                                        <%= p.name %> (SKU: <%= p.sku %>) &bull; <%= p.quantity %> Units Available
+                                    </option>
+                                <% }); %>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="quantity" class="form-label fw-medium text-dark">Dispatch Quantity (Units) <span class="text-danger">*</span></label>
+                            <input type="number" min="1" class="form-control" id="quantity" name="quantity" required placeholder="e.g. 10">
+                            <div class="form-text" id="availableStockHint">Available units will be reduced automatically</div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="reference_number" class="form-label fw-medium text-dark">Order / Requisition Reference Code</label>
+                            <input type="text" class="form-control font-monospace" id="reference_number" name="reference_number" placeholder="e.g. SO5421">
+                        </div>
+
+                        <div class="col-12">
+                            <label for="notes" class="form-label fw-medium text-dark">Dispatch Notes</label>
+                            <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Sales order details, customer reference, or destination department"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
+                        <a href="/dashboard" class="btn btn-outline-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-warning px-4">
+                            <i class="bi bi-box-arrow-up-right me-1"></i> Confirm Stock Out Dispatch
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const productSelect = document.getElementById('product_id');
+    const quantityInput = document.getElementById('quantity');
+    const hint = document.getElementById('availableStockHint');
+
+    function updateStockLimit() {
+        const selected = productSelect.options[productSelect.selectedIndex];
+        if (selected && selected.dataset.qty !== undefined) {
+            const avail = parseInt(selected.dataset.qty, 10);
+            quantityInput.max = avail;
+            if (avail === 0) {
+                hint.textContent = 'Warning: This product is currently Out of Stock (0 units)';
+                hint.className = 'form-text text-danger fw-bold';
+            } else {
+                hint.textContent = 'Maximum available for dispatch: ' + avail + ' units';
+                hint.className = 'form-text text-primary';
+            }
+        }
+    }
+
+    productSelect.addEventListener('change', updateStockLimit);
+    updateStockLimit();
+});
+</script>
+
+<%- include('../partials/footer') %>

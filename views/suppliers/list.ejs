@@ -1,0 +1,78 @@
+<%- include('../partials/header', { pageHeading: 'Suppliers Directory' }) %>
+
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+    <div>
+        <h4 class="fw-bold mb-1 text-dark">Approved Suppliers & Vendors</h4>
+        <p class="text-secondary small mb-0">Manage supplier profiles, contact representatives, and procurement links</p>
+    </div>
+    <a href="/suppliers/new" class="btn btn-primary d-flex align-items-center">
+        <i class="bi bi-plus-circle me-1"></i> Register New Supplier
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th style="width: 70px;">ID</th>
+                    <th>Supplier / Organization</th>
+                    <th>Contact Person</th>
+                    <th>Email Address</th>
+                    <th>Telephone</th>
+                    <th>Address</th>
+                    <th>Products</th>
+                    <th class="text-end" style="min-width: 120px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (suppliers && suppliers.length > 0) { %>
+                    <% suppliers.forEach(function(s) { %>
+                        <tr>
+                            <td class="text-muted small">#<%= s.id %></td>
+                            <td>
+                                <div class="fw-bold text-dark"><%= s.name %></div>
+                            </td>
+                            <td><%= s.contact_person || 'Not specified' %></td>
+                            <td>
+                                <% if (s.email) { %>
+                                    <a href="mailto:<%= s.email %>" class="text-decoration-none"><%= s.email %></a>
+                                <% } else { %>
+                                    <span class="text-muted">None</span>
+                                <% } %>
+                            </td>
+                            <td><%= s.phone || 'None' %></td>
+                            <td class="text-muted small"><%= s.address || 'None' %></td>
+                            <td>
+                                <span class="badge bg-light text-primary border"><%= s.product_count %> Products</span>
+                            </td>
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a href="/suppliers/<%= s.id %>/edit" class="btn btn-outline-primary" title="Edit Supplier">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form action="/suppliers/<%= s.id %>/delete" method="POST" class="d-inline" onsubmit="return confirmDelete('supplier');">
+                                        <button type="submit" class="btn btn-outline-danger" title="Delete Supplier">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="8" class="text-center py-5 text-muted">
+                            <div>No suppliers recorded</div>
+                            <div class="mt-2">
+                                <a href="/suppliers/new" class="btn btn-sm btn-primary">Register First Supplier</a>
+                            </div>
+                        </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

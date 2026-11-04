@@ -1,0 +1,78 @@
+<%- include('../partials/header', { pageHeading: 'Receive Incoming Stock' }) %>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+                <h4 class="fw-bold mb-1 text-dark">Stock In Entry</h4>
+                <p class="text-secondary small mb-0">Record incoming inventory shipments and increment available product stock automatically</p>
+            </div>
+            <a href="/stock/history" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-clock-history me-1"></i> View History
+            </a>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <form action="/stock/in" method="POST">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="product_id" class="form-label fw-medium text-dark">Select Target Product <span class="text-danger">*</span></label>
+                            <select class="form-select" id="product_id" name="product_id" required>
+                                <option value="" disabled <%= !preselectedProductId ? 'selected' : '' %>>Choose a Product from Catalog</option>
+                                <% products.forEach(function(p) { %>
+                                    <option value="<%= p.id %>" <%= preselectedProductId == p.id ? 'selected' : '' %> data-price="<%= p.unit_price %>">
+                                        <%= p.name %> (SKU: <%= p.sku %>) &bull; Current Stock: <%= p.quantity %> Units
+                                    </option>
+                                <% }); %>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="quantity" class="form-label fw-medium text-dark">Incoming Quantity (Units) <span class="text-danger">*</span></label>
+                            <input type="number" min="1" class="form-control" id="quantity" name="quantity" required placeholder="e.g. 50">
+                            <div class="form-text">Will be added to existing warehouse stock</div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="unit_price" class="form-label fw-medium text-dark">Unit Acquisition Cost ($)</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="number" step="0.01" min="0" class="form-control" id="unit_price" name="unit_price" placeholder="Leave empty for default catalog price">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="supplier_id" class="form-label fw-medium text-dark">Delivering Supplier</label>
+                            <select class="form-select" id="supplier_id" name="supplier_id">
+                                <option value="">Default Product Supplier</option>
+                                <% suppliers.forEach(function(sup) { %>
+                                    <option value="<%= sup.id %>"><%= sup.name %></option>
+                                <% }); %>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="reference_number" class="form-label fw-medium text-dark">PO / Delivery Reference Code</label>
+                            <input type="text" class="form-control font-monospace" id="reference_number" name="reference_number" placeholder="e.g. PO8832">
+                        </div>
+
+                        <div class="col-12">
+                            <label for="notes" class="form-label fw-medium text-dark">Transaction Notes</label>
+                            <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Batch details, inspection notes, or storage bin allocation"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
+                        <a href="/dashboard" class="btn btn-outline-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-success px-4">
+                            <i class="bi bi-box-arrow-in-down me-1"></i> Confirm Stock In
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

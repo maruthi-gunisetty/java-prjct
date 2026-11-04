@@ -1,0 +1,82 @@
+<aside class="app-sidebar" id="appSidebar">
+    <a href="/dashboard" class="sidebar-brand">
+        <i class="bi bi-journal-bookmark-fill text-primary"></i>
+        <span>Digital Book</span>
+    </a>
+
+    <div class="sidebar-section-title">Core Management</div>
+    <ul class="sidebar-menu">
+        <li class="sidebar-item">
+            <a href="/dashboard" class="sidebar-link <%= activeNav === 'dashboard' ? 'active' : '' %>">
+                <i class="bi bi-grid-1x2-fill"></i>
+                <span>Executive Dashboard</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="/products" class="sidebar-link <%= activeNav === 'products' ? 'active' : '' %>">
+                <i class="bi bi-box-seam-fill"></i>
+                <span>Products Directory</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="/categories" class="sidebar-link <%= activeNav === 'categories' ? 'active' : '' %>">
+                <i class="bi bi-tags-fill"></i>
+                <span>Categories</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="/suppliers" class="sidebar-link <%= activeNav === 'suppliers' ? 'active' : '' %>">
+                <i class="bi bi-truck"></i>
+                <span>Suppliers</span>
+            </a>
+        </li>
+    </ul>
+
+    <div class="sidebar-section-title">Stock Operations</div>
+    <ul class="sidebar-menu">
+        <li class="sidebar-item">
+            <a href="/stock/in" class="sidebar-link <%= activeNav === 'stock_in' ? 'active' : '' %>">
+                <i class="bi bi-box-arrow-in-down text-success"></i>
+                <span>Stock In Entry</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="/stock/out" class="sidebar-link <%= activeNav === 'stock_out' ? 'active' : '' %>">
+                <i class="bi bi-box-arrow-up-right text-warning"></i>
+                <span>Stock Out Dispatch</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="/stock/history" class="sidebar-link <%= activeNav === 'history' ? 'active' : '' %>">
+                <i class="bi bi-clock-history"></i>
+                <span>Transaction History</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="/stock/low" class="sidebar-link <%= activeNav === 'low_stock' ? 'active' : '' %>">
+                <i class="bi bi-shield-exclamation text-danger"></i>
+                <span>Low Stock Alerts</span>
+            </a>
+        </li>
+    </ul>
+
+    <div class="sidebar-section-title">Analytics and Reports</div>
+    <ul class="sidebar-menu">
+        <li class="sidebar-item">
+            <a href="/reports" class="sidebar-link <%= activeNav === 'reports' ? 'active' : '' %>">
+                <i class="bi bi-file-earmark-bar-graph-fill text-info"></i>
+                <span>Inventory Reports</span>
+            </a>
+        </li>
+    </ul>
+
+    <div class="sidebar-footer mt-auto p-3 text-secondary border-top border-secondary border-opacity-25" style="font-size: 0.8rem;">
+        <div class="d-flex align-items-center">
+            <i class="bi bi-shield-check text-success me-2 fs-5"></i>
+            <div>
+                <div class="text-white fw-bold">Digital Book Engine</div>
+                <div class="text-white-50">Enterprise Edition v2.0</div>
+            </div>
+        </div>
+    </div>
+</aside>

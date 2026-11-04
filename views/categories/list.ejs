@@ -1,0 +1,68 @@
+<%- include('../partials/header', { pageHeading: 'Category Management' }) %>
+
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+    <div>
+        <h4 class="fw-bold mb-1 text-dark">Product Categories</h4>
+        <p class="text-secondary small mb-0">Organize and group inventory items into clean classifications</p>
+    </div>
+    <a href="/categories/new" class="btn btn-primary d-flex align-items-center">
+        <i class="bi bi-plus-circle me-1"></i> Add New Category
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th style="width: 70px;">ID</th>
+                    <th>Category Name</th>
+                    <th>Description</th>
+                    <th>Associated Products</th>
+                    <th class="text-end" style="min-width: 120px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (categories && categories.length > 0) { %>
+                    <% categories.forEach(function(cat) { %>
+                        <tr>
+                            <td class="text-muted small">#<%= cat.id %></td>
+                            <td>
+                                <div class="fw-bold text-dark"><%= cat.name %></div>
+                            </td>
+                            <td class="text-muted"><%= cat.description || 'No description provided' %></td>
+                            <td>
+                                <a href="/products?categoryId=<%= cat.id %>" class="badge bg-light text-primary border text-decoration-none">
+                                    <%= cat.product_count %> Products
+                                </a>
+                            </td>
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a href="/categories/<%= cat.id %>/edit" class="btn btn-outline-primary" title="Edit Category">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form action="/categories/<%= cat.id %>/delete" method="POST" class="d-inline" onsubmit="return confirmDelete('category');">
+                                        <button type="submit" class="btn btn-outline-danger" title="Delete Category">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="5" class="text-center py-5 text-muted">
+                            <div>No categories found</div>
+                            <div class="mt-2">
+                                <a href="/categories/new" class="btn btn-sm btn-primary">Create First Category</a>
+                            </div>
+                        </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

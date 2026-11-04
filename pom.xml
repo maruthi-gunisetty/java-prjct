@@ -12,8 +12,8 @@
     <groupId>com.inventory</groupId>
     <artifactId>inventory-management-system</artifactId>
     <version>1.0.0</version>
-    <name>Inventory Management System</name>
-    <description>Enterprise Inventory Management System in Java Spring Boot</description>
+    <name>Digital Book</name>
+    <description>Digital Book Management Platform in Java Spring Boot</description>
 
     <properties>
         <java.version>21</java.version>

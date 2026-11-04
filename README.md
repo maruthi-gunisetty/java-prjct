@@ -1,6 +1,6 @@
-# Inventory Management System
+# Digital Book
 
-A full stack enterprise inventory management web application developed using Java, Spring Boot, Spring MVC, Spring Data JPA, Hibernate, MySQL, Thymeleaf, and Bootstrap 5.
+A full stack enterprise inventory and logistics management web application developed using Java, Spring Boot, Spring MVC, Spring Data JPA, Hibernate, MySQL, Thymeleaf, and Bootstrap 5.
 
 Suitable for academic evaluations and real world business inventory tracking.
 
@@ -33,7 +33,7 @@ Suitable for academic evaluations and real world business inventory tracking.
 ### Frontend
 - **Template Engine**: Thymeleaf 3
 - **CSS Framework**: Bootstrap 5.3.3
-- **Typography**: Inter (Google Fonts)
+- **Typography**: Roboto (Google Fonts)
 - **Iconography**: Bootstrap Icons (clean vector line icons)
 - **Data Visualization**: Chart.js 4.4.2
 

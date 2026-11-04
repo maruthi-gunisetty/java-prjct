@@ -1,7 +1,7 @@
-/* Enterprise Inventory Management System Stylesheet */
+/* Digital Book Management System Stylesheet */
 /* Color Palette: Navy Blue, White, Light Grey, Subtle Blue Accents */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 
 :root {
     --navy-dark: #0f172a;
@@ -30,7 +30,7 @@
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background-color: var(--body-bg);
     color: var(--text-primary);
     line-height: 1.5;
